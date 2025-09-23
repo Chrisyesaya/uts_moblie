@@ -289,6 +289,6 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
     
-    Navigator.pushReplacementNamed(context, '/dashboard');
+    Navigator.pushReplacementNamed(context, '/login');
   }
 }
