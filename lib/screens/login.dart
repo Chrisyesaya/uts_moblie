@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
-import '../providers/auth_provider.dart';
+import '../../providers/auth_provider.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -23,7 +23,9 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> _initializeVideo() async {
     try {
-      _videoController = VideoPlayerController.asset('assets/background_video.mp4');
+      _videoController = VideoPlayerController.asset(
+        'assets/background_video.mp4', // pastikan sesuai dengan lokasi file
+      );
 
       await _videoController.initialize();
 
@@ -59,7 +61,18 @@ class _LoginPageState extends State<LoginPage> {
       return Container(
         color: Colors.black,
         child: Center(
-          child: Icon(Icons.error, color: Colors.red, size: 50),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.error_outline, color: Colors.red, size: 50),
+              SizedBox(height: 10),
+              Text(
+                'Video tidak dapat dimuat\nPastikan file assets/background_video.mp4 ada',
+                style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
       );
     }
@@ -68,7 +81,17 @@ class _LoginPageState extends State<LoginPage> {
       return Container(
         color: Colors.black,
         child: Center(
-          child: CircularProgressIndicator(color: Colors.yellow),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(color: Colors.yellow),
+              SizedBox(height: 10),
+              Text(
+                'Memuat video...',
+                style: TextStyle(color: Colors.white),
+              ),
+            ],
+          ),
         ),
       );
     }
@@ -81,15 +104,63 @@ class _LoginPageState extends State<LoginPage> {
             child: SizedBox(
               width: _videoController.value.size.width,
               height: _videoController.value.size.height,
-              child: VideoPlayer(_videoController),
+              child: AspectRatio(
+                aspectRatio: _videoController.value.aspectRatio,
+                child: VideoPlayer(_videoController),
+              ),
             ),
           ),
         ),
+        // lapisan gelap biar teks lebih jelas
         Container(
-          color: Colors.black.withOpacity(0.6),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.black.withOpacity(0.7),
+                Colors.black.withOpacity(0.4),
+                Colors.black.withOpacity(0.7),
+              ],
+            ),
+          ),
         ),
       ],
     );
+  }
+
+  void _handleLogin(BuildContext context) {
+    if (_usernameController.text.isEmpty || _passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Harap isi username dan password'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    if (_passwordController.text.length < 6) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Password minimal 6 karakter'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    Provider.of<AuthProvider>(context, listen: false)
+        .login(_usernameController.text);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Login berhasil!'),
+        backgroundColor: Colors.green,
+      ),
+    );
+
+    Navigator.pushReplacementNamed(context, '/dashboard');
   }
 
   @override
@@ -99,6 +170,7 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           _buildVideoBackground(),
 
+          // Form login
           Center(
             child: SingleChildScrollView(
               child: Padding(
@@ -115,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(
-                          Icons.lock_open,
+                          Icons.fitness_center,
                           size: 50,
                           color: Theme.of(context).primaryColor,
                         ),
@@ -157,13 +229,12 @@ class _LoginPageState extends State<LoginPage> {
                           height: 50,
                           child: ElevatedButton(
                             onPressed: () {
-                              Provider.of<AuthProvider>(context, listen: false)
-                                  .login(_usernameController.text);
-                              Navigator.pushReplacementNamed(context, '/dashboard');
+                              _handleLogin(context);
                             },
                             child: Text(
                               'LOGIN',
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
                             ),
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
@@ -174,7 +245,8 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         SizedBox(height: 15),
                         TextButton(
-                          onPressed: () => Navigator.pushNamed(context, '/register'),
+                          onPressed: () =>
+                              Navigator.pushNamed(context, '/register'),
                           child: RichText(
                             text: TextSpan(
                               text: 'Belum punya akun? ',
