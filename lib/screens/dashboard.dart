@@ -15,60 +15,61 @@ class DashboardPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-  leading: GestureDetector(
-    onTap: () {
-      showDialog(
-        context: context,
-        builder: (context) => Dialog(
-          backgroundColor: Colors.transparent,
-          child: SizedBox(
-            width: 300,
-            height: 300,
+        leading: GestureDetector(
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (context) => Dialog(
+                child: SizedBox(
+                  width: 300,
+                  height: 300,
+                  child: ClipOval(
+                    child: Container(
+                      color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+                      child: Icon(
+                        Icons.person,
+                        size: 100,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+          child: Padding(
+            padding: EdgeInsets.all(8.0),
             child: ClipOval(
               child: Container(
-                color: Colors.grey[800],
+                color: Theme.of(context).colorScheme.primary,
                 child: Icon(
                   Icons.person,
-                  size: 100,
-                  color: Colors.amber[700],
+                  size: 24,
+                  color: Theme.of(context).colorScheme.onPrimary,
                 ),
               ),
             ),
           ),
         ),
-      );
-    },
-    child: Padding(
-      padding: EdgeInsets.all(8.0),
-      child: ClipOval(
-        child: Container(
-          color: Colors.amber[700],
-          child: Icon(
-            Icons.person,
-            size: 24,
-            color: Colors.black,
+        title: Text(
+          'SportClub - $username',
+          style: TextStyle(
+            fontFamily: 'Montserrat',
+            color: Theme.of(context).colorScheme.onPrimary,
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
           ),
         ),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        elevation: 0,
+        centerTitle: false,
+        iconTheme: IconThemeData(
+          color: Theme.of(context).colorScheme.onPrimary,
+        ),
       ),
-    ),
-  ),
-  title: Text(
-    'SportClub - $username',
-    style: TextStyle(
-      fontFamily: 'Montserrat', // Tambahkan ini
-      color: Colors.amber[700],
-      fontWeight: FontWeight.w600, // SemiBold untuk Montserrat
-      fontSize: 20,
-    ),
-  ),
-  backgroundColor: Colors.grey[900],
-  elevation: 0,
-  centerTitle: false,
-  iconTheme: IconThemeData(color: Colors.amber[700]),
-),
       body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start, // Tambahkan ini
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Welcome Section
             _buildWelcomeSection(context),
@@ -85,6 +86,8 @@ class DashboardPage extends StatelessWidget {
   }
 
   Widget _buildWelcomeSection(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    
     return Container(
       padding: EdgeInsets.all(20),
       child: Column(
@@ -95,14 +98,14 @@ class DashboardPage extends StatelessWidget {
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
-              color: Colors.amber[700],
+              color: Theme.of(context).primaryColor,
             ),
           ),
           SizedBox(height: 8),
           Text(
             'SportClub adalah aplikasi membership gym yang menyediakan berbagai paket membership dengan durasi dan fasilitas berbeda.',
             style: TextStyle(
-              color: Colors.white70,
+              color: isDarkMode ? Colors.white70 : Colors.black87,
               fontSize: 14,
             ),
           ),
@@ -110,7 +113,7 @@ class DashboardPage extends StatelessWidget {
           Text(
             'Aplikasi ini dibuat oleh: \n- Vincent Pratama / 32230011\n- Christopher Yesaya / 32230031',
             style: TextStyle(
-              color: Colors.white70,
+              color: isDarkMode ? Colors.white70 : Colors.black87,
               fontSize: 14,
             ),
           ),
@@ -120,6 +123,7 @@ class DashboardPage extends StatelessWidget {
   }
 
   Widget _buildGallerySection(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final List<Map<String, String>> galleryItems = [
       {
         'image': 'assets/1.jpg',
@@ -163,14 +167,14 @@ class DashboardPage extends StatelessWidget {
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
-              color: Colors.amber[700],
+              color: Theme.of(context).primaryColor,
             ),
           ),
           SizedBox(height: 8),
           Text(
             'Jelajahi berbagai fasilitas sport premium yang kami sediakan',
             style: TextStyle(
-              color: Colors.white70,
+              color: isDarkMode ? Colors.white70 : Colors.black87,
               fontSize: 14,
             ),
           ),
@@ -180,11 +184,7 @@ class DashboardPage extends StatelessWidget {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: galleryItems.map((item) => 
-                _buildGalleryItem(
-                  item['image']!, 
-                  item['title']!,
-                  item['description']!
-                )
+                _buildGalleryItem(context, item['image']!, item['title']!, item['description']!)
               ).toList(),
             ),
           ),
@@ -193,16 +193,18 @@ class DashboardPage extends StatelessWidget {
     );
   }
 
-  Widget _buildGalleryItem(String imagePath, String title, String description) {
+  Widget _buildGalleryItem(BuildContext context, String imagePath, String title, String description) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    
     return Container(
       width: 180,
       margin: EdgeInsets.only(right: 12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: Colors.grey[800],
+        color: isDarkMode ? Colors.grey[800] : Colors.grey[100],
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.3),
+            color: Colors.black.withOpacity(isDarkMode ? 0.3 : 0.1),
             blurRadius: 8,
             offset: Offset(0, 4),
           ),
@@ -216,17 +218,17 @@ class DashboardPage extends StatelessWidget {
             child: Container(
               height: 120,
               width: double.infinity,
-              color: Colors.grey[700],
+              color: isDarkMode ? Colors.grey[700] : Colors.grey[300],
               child: Image.asset(
                 imagePath,
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
                   return Container(
-                    color: Colors.grey[700],
+                    color: isDarkMode ? Colors.grey[700] : Colors.grey[300],
                     child: Icon(
                       Icons.fitness_center,
                       size: 40,
-                      color: Colors.amber[700],
+                      color: Theme.of(context).primaryColor,
                     ),
                   );
                 },
@@ -243,7 +245,7 @@ class DashboardPage extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
-                    color: Colors.white,
+                    color: isDarkMode ? Colors.white : Colors.black,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -253,7 +255,7 @@ class DashboardPage extends StatelessWidget {
                   description,
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.white70,
+                    color: isDarkMode ? Colors.white70 : Colors.black87,
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -267,6 +269,8 @@ class DashboardPage extends StatelessWidget {
   }
 
   Widget _buildMembershipSection(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    
     return Consumer<MembershipProvider>(
       builder: (context, membershipProvider, child) {
         return Container(
@@ -279,14 +283,14 @@ class DashboardPage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  color: Colors.amber[700],
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
               SizedBox(height: 8),
               Text(
                 'Tingkatkan pengalaman olahraga Anda dengan membership terbaik',
                 style: TextStyle(
-                  color: Colors.white70,
+                  color: isDarkMode ? Colors.white70 : Colors.black87,
                   fontSize: 14,
                 ),
               ),
@@ -302,22 +306,23 @@ class DashboardPage extends StatelessWidget {
   }
 
   Widget _buildMembershipCard(BuildContext context, Membership membership) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final isPlatinum = membership.name == 'Platinum';
     
     return Container(
       margin: EdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        color: Colors.grey[800],
+        color: isDarkMode ? Colors.grey[800] : Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.3),
+            color: Colors.black.withOpacity(isDarkMode ? 0.3 : 0.1),
             blurRadius: 12,
             offset: Offset(0, 4),
           ),
         ],
         border: isPlatinum ? Border.all(
-          color: Colors.amber,
+          color: Theme.of(context).primaryColor,
           width: 2,
         ) : null,
       ),
@@ -331,7 +336,7 @@ class DashboardPage extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
-                colors: _getCardGradient(membership.name),
+                colors: _getCardGradient(membership.name, isDarkMode),
               ),
               borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
             ),
@@ -387,13 +392,13 @@ class DashboardPage extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
-                    color: Colors.amber[700],
+                    color: Theme.of(context).primaryColor,
                   ),
                 ),
                 Text(
                   'Rp ${_formatPrice(membership.price / membership.duration)}/bulan',
                   style: TextStyle(
-                    color: Colors.white70,
+                    color: isDarkMode ? Colors.white70 : Colors.black87,
                     fontSize: 14,
                   ),
                 ),
@@ -411,7 +416,7 @@ class DashboardPage extends StatelessWidget {
                   'Fasilitas yang didapat:',
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
-                    color: Colors.white,
+                    color: isDarkMode ? Colors.white : Colors.black,
                   ),
                 ),
                 SizedBox(height: 12),
@@ -423,7 +428,7 @@ class DashboardPage extends StatelessWidget {
                       children: [
                         Icon(
                           Icons.check_circle,
-                          color: Colors.amber[700],
+                          color: Theme.of(context).primaryColor,
                           size: 18,
                         ),
                         SizedBox(width: 8),
@@ -431,7 +436,7 @@ class DashboardPage extends StatelessWidget {
                           child: Text(
                             benefit,
                             style: TextStyle(
-                              color: Colors.white70,
+                              color: isDarkMode ? Colors.white70 : Colors.black87,
                               fontSize: 14,
                             ),
                           ),
@@ -462,7 +467,7 @@ class DashboardPage extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: _getButtonColor(membership.name),
+                  backgroundColor: _getButtonColor(membership.name, isDarkMode),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -473,7 +478,7 @@ class DashboardPage extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    color: _getButtonTextColor(membership.name, isDarkMode),
                   ),
                 ),
               ),
@@ -484,29 +489,50 @@ class DashboardPage extends StatelessWidget {
     );
   }
 
-  List<Color> _getCardGradient(String membershipName) {
+  List<Color> _getCardGradient(String membershipName, bool isDarkMode) {
     switch (membershipName) {
       case 'Silver':
-        return [Colors.grey[600]!, Colors.grey[500]!];
+        return isDarkMode 
+            ? [Colors.grey[600]!, Colors.grey[500]!]
+            : [Colors.grey[400]!, Colors.grey[300]!];
       case 'Gold':
-        return [Colors.amber[700]!, Colors.amber[600]!];
+        return isDarkMode
+            ? [Colors.amber[700]!, Colors.amber[600]!]
+            : [Colors.purple[700]!, Colors.purple[500]!];
       case 'Platinum':
-        return [Colors.purple[700]!, Colors.purple[500]!];
+        return isDarkMode
+            ? [Colors.purple[700]!, Colors.purple[500]!]
+            : [Colors.deepPurple[700]!, Colors.deepPurple[500]!];
       default:
-        return [Colors.blue, Colors.lightBlue];
+        return isDarkMode
+            ? [Colors.blue, Colors.lightBlue]
+            : [Colors.blue, Colors.lightBlue];
     }
   }
 
-  Color _getButtonColor(String membershipName) {
+  Color _getButtonColor(String membershipName, bool isDarkMode) {
     switch (membershipName) {
       case 'Silver':
-        return Colors.grey[400]!;
+        return isDarkMode ? Colors.grey[400]! : Colors.grey[500]!;
       case 'Gold':
-        return Colors.amber[700]!;
+        return isDarkMode ? Colors.amber[700]! : Colors.purple;
       case 'Platinum':
-        return Colors.purple[400]!;
+        return isDarkMode ? Colors.purple[400]! : Colors.deepPurple;
       default:
-        return Colors.amber[700]!;
+        return isDarkMode ? Colors.amber[700]! : Colors.purple;
+    }
+  }
+
+  Color _getButtonTextColor(String membershipName, bool isDarkMode) {
+    switch (membershipName) {
+      case 'Silver':
+        return Colors.black;
+      case 'Gold':
+        return isDarkMode ? Colors.black : Colors.white;
+      case 'Platinum':
+        return isDarkMode ? Colors.black : Colors.white;
+      default:
+        return isDarkMode ? Colors.black : Colors.white;
     }
   }
 

@@ -146,16 +146,20 @@ class _RegisterPageState extends State<RegisterPage> {
                           width: 80,
                           height: 80,
                           decoration: BoxDecoration(
-                            color: Colors.amber[700]!.withOpacity(0.1),
+                            color: Theme.of(context).primaryColor.withOpacity(0.1),
                             shape: BoxShape.circle,
-                            border: Border.all(color: Colors.amber[700]!, width: 2),
+                            border: Border.all(
+                              color: Theme.of(context).primaryColor, 
+                              width: 2
+                            ),
                           ),
                           child: Icon(
                             Icons.fitness_center,
                             size: 40,
-                            color: Colors.amber[700],
+                            color: Theme.of(context).primaryColor,
                           ),
                         ),
+                        const SizedBox(height: 16),
 
                         Text(
                           "SportClub",

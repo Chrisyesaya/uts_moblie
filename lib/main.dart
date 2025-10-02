@@ -26,13 +26,22 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CartProvider()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Gym App',
+        // Light theme: Putih - Ungu
         // Light theme: Putih - Ungu
         theme: ThemeData(
           fontFamily: 'Montserrat',
           brightness: Brightness.light,
           scaffoldBackgroundColor: Colors.white,
           primaryColor: Colors.purple,
+          colorScheme: ColorScheme.light(
+            primary: Colors.purple,
+            secondary: Colors.purple.shade300,
+            surface: Colors.white,
+            onPrimary: Colors.white,
+            onSecondary: Colors.white,
+          ),
           appBarTheme: const AppBarTheme(
             backgroundColor: Colors.white,
             foregroundColor: Colors.purple,
@@ -51,7 +60,7 @@ class MyApp extends StatelessWidget {
             filled: true,
             fillColor: Colors.grey[200],
             hintStyle: const TextStyle(color: Colors.grey),
-            border: OutlineInputBorder(
+            border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(12)),
               borderSide: BorderSide.none,
             ),
