@@ -125,13 +125,14 @@ class _LoginPageState extends State<LoginPage> {
                           width: 80,
                           height: 80,
                           decoration: BoxDecoration(
-                            color: theme.primaryColor.withOpacity(0.1),
+                            color: Colors.amber[700]!.withOpacity(0.1),
                             shape: BoxShape.circle,
+                            border: Border.all(color: Colors.amber[700]!, width: 2),
                           ),
                           child: Icon(
                             Icons.fitness_center,
                             size: 40,
-                            color: theme.primaryColor,
+                            color: Colors.amber[700],
                           ),
                         ),
                         const SizedBox(height: 16),

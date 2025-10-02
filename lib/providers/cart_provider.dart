@@ -1,3 +1,4 @@
+// providers/cart_provider.dart
 import 'package:flutter/foundation.dart';
 import '../models/membership.dart';
 
@@ -11,17 +12,17 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeItem(String id) {
-    _items.removeWhere((item) => item.id == id);
-    notifyListeners();
-  }
-
-  void clearCart() {
-    _items.clear();
+  void removeItem(String membershipId) {
+    _items.removeWhere((item) => item.id == membershipId);
     notifyListeners();
   }
 
   double get totalPrice {
     return _items.fold(0, (total, item) => total + item.price);
+  }
+
+  void clearCart() {
+    _items.clear();
+    notifyListeners();
   }
 }
