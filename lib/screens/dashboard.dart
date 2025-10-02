@@ -1,76 +1,519 @@
+// dashboard.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/membership_provider.dart';
 import '../providers/cart_provider.dart';
+import '../providers/auth_provider.dart';
 import '../models/membership.dart';
 
 class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
+    final username = authProvider.username ?? '';
+
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: Text('Dashboard'),
-        backgroundColor: Theme.of(context).colorScheme.primary,
+  leading: GestureDetector(
+    onTap: () {
+      showDialog(
+        context: context,
+        builder: (context) => Dialog(
+          backgroundColor: Colors.transparent,
+          child: SizedBox(
+            width: 300,
+            height: 300,
+            child: ClipOval(
+              child: Container(
+                color: Colors.grey[800],
+                child: Icon(
+                  Icons.person,
+                  size: 100,
+                  color: Colors.amber[700],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    },
+    child: Padding(
+      padding: EdgeInsets.all(8.0),
+      child: ClipOval(
+        child: Container(
+          color: Colors.amber[700],
+          child: Icon(
+            Icons.person,
+            size: 24,
+            color: Colors.black,
+          ),
+        ),
       ),
-      body: Consumer<MembershipProvider>(
-        builder: (context, membershipProvider, child) {
-          return ListView.builder(
-            itemCount: membershipProvider.memberships.length,
-            itemBuilder: (context, index) {
-              final membership = membershipProvider.memberships[index];
-              return MembershipCard(membership: membership);
-            },
-          );
-        },
+    ),
+  ),
+  title: Text(
+    'SportClub - $username',
+    style: TextStyle(
+      fontFamily: 'Montserrat', // Tambahkan ini
+      color: Colors.amber[700],
+      fontWeight: FontWeight.w600, // SemiBold untuk Montserrat
+      fontSize: 20,
+    ),
+  ),
+  backgroundColor: Colors.grey[900],
+  elevation: 0,
+  centerTitle: false,
+  iconTheme: IconThemeData(color: Colors.amber[700]),
+),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start, // Tambahkan ini
+          children: [
+            // Welcome Section
+            _buildWelcomeSection(context),
+            
+            // Gallery Section
+            _buildGallerySection(context),
+
+            // Membership Section
+            _buildMembershipSection(context),
+          ],
+        ),
       ),
     );
   }
-}
 
-class MembershipCard extends StatelessWidget {
-  final Membership membership;
-
-  const MembershipCard({required this.membership});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(10),
+  Widget _buildWelcomeSection(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(20),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Placeholder untuk gambar
+          Text(
+            'Tentang Aplikasi',
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: Colors.amber[700],
+            ),
+          ),
+          SizedBox(height: 8),
+          Text(
+            'SportClub adalah aplikasi membership gym yang menyediakan berbagai paket membership dengan durasi dan fasilitas berbeda.',
+            style: TextStyle(
+              color: Colors.white70,
+              fontSize: 14,
+            ),
+          ),
+          SizedBox(height: 4),
+          Text(
+            'Aplikasi ini dibuat oleh: \n- Vincent Pratama / 32230011\n- Christopher Yesaya / 32230031',
+            style: TextStyle(
+              color: Colors.white70,
+              fontSize: 14,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildGallerySection(BuildContext context) {
+    final List<Map<String, String>> galleryItems = [
+      {
+        'image': 'assets/1.jpg',
+        'title': 'Area Gym Premium',
+        'description': 'Equipment modern dengan trainer berpengalaman'
+      },
+      {
+        'image': 'assets/2.jpg', 
+        'title': 'Billiard Lounge',
+        'description': 'Meja billiard profesional untuk waktu santai'
+      },
+      {
+        'image': 'assets/3.jpg',
+        'title': 'Tenis Meja',
+        'description': 'Area tenis meja untuk pertandingan seru'
+      },
+      {
+        'image': 'assets/4.jpg',
+        'title': 'Badminton Court',
+        'description': 'Lapangan badminton standar nasional'
+      },
+      {
+        'image': 'assets/5.jpg',
+        'title': 'Yoga Studio',
+        'description': 'Studio yoga dengan instruktur bersertifikat'
+      },
+      {
+        'image': 'assets/6.jpg',
+        'title': 'Squash Court',
+        'description': 'Court squash dengan pencahayaan optimal'
+      },
+    ];
+
+    return Container(
+      padding: EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Galeri Fasilitas',
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: Colors.amber[700],
+            ),
+          ),
+          SizedBox(height: 8),
+          Text(
+            'Jelajahi berbagai fasilitas sport premium yang kami sediakan',
+            style: TextStyle(
+              color: Colors.white70,
+              fontSize: 14,
+            ),
+          ),
+          SizedBox(height: 16),
           Container(
-            height: 150,
-            color: Colors.grey[300],
-            child: Icon(Icons.fitness_center, size: 50),
+            height: 220,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: galleryItems.map((item) => 
+                _buildGalleryItem(
+                  item['image']!, 
+                  item['title']!,
+                  item['description']!
+                )
+              ).toList(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildGalleryItem(String imagePath, String title, String description) {
+    return Container(
+      width: 180,
+      margin: EdgeInsets.only(right: 12),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: Colors.grey[800],
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.3),
+            blurRadius: 8,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+            child: Container(
+              height: 120,
+              width: double.infinity,
+              color: Colors.grey[700],
+              child: Image.asset(
+                imagePath,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    color: Colors.grey[700],
+                    child: Icon(
+                      Icons.fitness_center,
+                      size: 40,
+                      color: Colors.amber[700],
+                    ),
+                  );
+                },
+              ),
+            ),
           ),
           Padding(
-            padding: EdgeInsets.all(15),
+            padding: EdgeInsets.all(12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(membership.name, style: Theme.of(context).textTheme.headlineSmall),
-                SizedBox(height: 10),
-                Text(membership.description),
-                SizedBox(height: 10),
-                Text('\$${membership.price.toStringAsFixed(0)}', 
-                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    Provider.of<CartProvider>(context, listen: false)
-                        .addItem(membership);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('${membership.name} added to cart')),
-                    );
-                  },
-                  child: Text('Pilih Membership'),
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                SizedBox(height: 4),
+                Text(
+                  description,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.white70,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildMembershipSection(BuildContext context) {
+    return Consumer<MembershipProvider>(
+      builder: (context, membershipProvider, child) {
+        return Container(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Pilih Membership',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.amber[700],
+                ),
+              ),
+              SizedBox(height: 8),
+              Text(
+                'Tingkatkan pengalaman olahraga Anda dengan membership terbaik',
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 14,
+                ),
+              ),
+              SizedBox(height: 20),
+              ...membershipProvider.memberships.map((membership) => 
+                _buildMembershipCard(context, membership)
+              ).toList(),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildMembershipCard(BuildContext context, Membership membership) {
+    final isPlatinum = membership.name == 'Platinum';
+    
+    return Container(
+      margin: EdgeInsets.only(bottom: 20),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        color: Colors.grey[800],
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.3),
+            blurRadius: 12,
+            offset: Offset(0, 4),
+          ),
+        ],
+        border: isPlatinum ? Border.all(
+          color: Colors.amber,
+          width: 2,
+        ) : null,
+      ),
+      child: Column(
+        children: [
+          // Header dengan gradient
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: _getCardGradient(membership.name),
+              ),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      membership.name,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text(
+                        '${membership.duration} Bulan',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 8),
+                Text(
+                  membership.description,
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(0.9),
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // Harga
+          Container(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              children: [
+                Text(
+                  'Rp ${_formatPrice(membership.price)}',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.amber[700],
+                  ),
+                ),
+                Text(
+                  'Rp ${_formatPrice(membership.price / membership.duration)}/bulan',
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // Benefits
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Fasilitas yang didapat:',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(height: 12),
+                ...membership.benefits.map((benefit) => 
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 8),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.check_circle,
+                          color: Colors.amber[700],
+                          size: 18,
+                        ),
+                        SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            benefit,
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ).toList(),
+              ],
+            ),
+          ),
+
+          // Button
+          Container(
+            padding: EdgeInsets.all(20),
+            child: SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () {
+                  Provider.of<CartProvider>(context, listen: false)
+                      .addItem(membership);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('${membership.name} ditambahkan ke keranjang'),
+                      behavior: SnackBarBehavior.floating,
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: _getButtonColor(membership.name),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 2,
+                ),
+                child: Text(
+                  'Pilih Membership',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  List<Color> _getCardGradient(String membershipName) {
+    switch (membershipName) {
+      case 'Silver':
+        return [Colors.grey[600]!, Colors.grey[500]!];
+      case 'Gold':
+        return [Colors.amber[700]!, Colors.amber[600]!];
+      case 'Platinum':
+        return [Colors.purple[700]!, Colors.purple[500]!];
+      default:
+        return [Colors.blue, Colors.lightBlue];
+    }
+  }
+
+  Color _getButtonColor(String membershipName) {
+    switch (membershipName) {
+      case 'Silver':
+        return Colors.grey[400]!;
+      case 'Gold':
+        return Colors.amber[700]!;
+      case 'Platinum':
+        return Colors.purple[400]!;
+      default:
+        return Colors.amber[700]!;
+    }
+  }
+
+  String _formatPrice(double price) {
+    return price.toStringAsFixed(0).replaceAllMapped(
+      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+      (Match m) => '${m[1]}.',
     );
   }
 }

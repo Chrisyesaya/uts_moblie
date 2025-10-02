@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
         title: 'Gym App',
         // Light theme: Putih - Ungu
         theme: ThemeData(
+          fontFamily: 'Montserrat',
           brightness: Brightness.light,
           scaffoldBackgroundColor: Colors.white,
           primaryColor: Colors.purple,
@@ -75,12 +76,13 @@ class MyApp extends StatelessWidget {
 
         // Dark theme: Hitam - Kuning
         darkTheme: ThemeData(
+          fontFamily: 'Montserrat',
           brightness: Brightness.dark,
           scaffoldBackgroundColor: Colors.black,
           primaryColor: Colors.amber[600],
           colorScheme: ColorScheme.dark(
             primary: Colors.amber[600]!,
-            secondary: Colors.amber[600]!, // ini yang dipakai untuk "Daftar"
+            secondary: Colors.amber[600]!,
             surface: Colors.black,
             onPrimary: Colors.black,
             onSecondary: Colors.black,
@@ -126,7 +128,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
 
-        themeMode: ThemeMode.system, // ikut setting device
+        themeMode: ThemeMode.system,
         initialRoute: '/login',
         routes: {
           '/login': (_) => LoginPage(),
