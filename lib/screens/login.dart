@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
-import '../../providers/auth_provider.dart';
+import '../providers/auth_provider.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -14,6 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   late VideoPlayerController _videoController;
   bool _isVideoInitialized = false;
   bool _hasError = false;
+  bool _obscurePassword = true;
 
   @override
   void initState() {
@@ -24,29 +25,22 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> _initializeVideo() async {
     try {
       _videoController = VideoPlayerController.asset(
-        'assets/background_video.mp4', // pastikan sesuai dengan lokasi file
+        'assets/background_video.mp4',
       );
-
       await _videoController.initialize();
-
       if (mounted) {
         setState(() {
           _isVideoInitialized = true;
           _hasError = false;
         });
       }
-
       _videoController.setVolume(0.0);
-      _videoController.play();
       _videoController.setLooping(true);
+      _videoController.play();
     } catch (e) {
-      print('Error initializing video: $e');
-      if (mounted) {
-        setState(() {
-          _isVideoInitialized = false;
-          _hasError = true;
-        });
-      }
+      setState(() {
+        _hasError = true;
+      });
     }
   }
 
@@ -56,44 +50,32 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  Widget _buildVideoBackground() {
-    if (_hasError) {
-      return Container(
-        color: Colors.black,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.error_outline, color: Colors.red, size: 50),
-              SizedBox(height: 10),
-              Text(
-                'Video tidak dapat dimuat\nPastikan file assets/background_video.mp4 ada',
-                style: TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-        ),
-      );
+  void _handleLogin(BuildContext context) {
+    final username = _usernameController.text.trim();
+    final password = _passwordController.text.trim();
+
+    if (username.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Harap isi semua field')));
+      return;
     }
 
-    if (!_isVideoInitialized) {
-      return Container(
-        color: Colors.black,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CircularProgressIndicator(color: Colors.yellow),
-              SizedBox(height: 10),
-              Text(
-                'Memuat video...',
-                style: TextStyle(color: Colors.white),
-              ),
-            ],
-          ),
-        ),
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final success = authProvider.login(username, password);
+
+    if (success) {
+      Navigator.pushReplacementNamed(context, '/dashboard');
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Username atau password salah!')),
       );
+    }
+  }
+
+  Widget _buildVideoBackground() {
+    if (_hasError || !_isVideoInitialized) {
+      return Container(color: Colors.black);
     }
 
     return Stack(
@@ -104,159 +86,153 @@ class _LoginPageState extends State<LoginPage> {
             child: SizedBox(
               width: _videoController.value.size.width,
               height: _videoController.value.size.height,
-              child: AspectRatio(
-                aspectRatio: _videoController.value.aspectRatio,
-                child: VideoPlayer(_videoController),
-              ),
+              child: VideoPlayer(_videoController),
             ),
           ),
         ),
-        // lapisan gelap biar teks lebih jelas
         Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.black.withOpacity(0.7),
-                Colors.black.withOpacity(0.4),
-                Colors.black.withOpacity(0.7),
-              ],
-            ),
-          ),
+          color: Colors.black.withOpacity(0.6),
         ),
       ],
     );
   }
 
-  void _handleLogin(BuildContext context) {
-    if (_usernameController.text.isEmpty || _passwordController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Harap isi username dan password'),
-          backgroundColor: Colors.red,
-        ),
-      );
-      return;
-    }
-
-    if (_passwordController.text.length < 6) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Password minimal 6 karakter'),
-          backgroundColor: Colors.red,
-        ),
-      );
-      return;
-    }
-
-    Provider.of<AuthProvider>(context, listen: false)
-        .login(_usernameController.text);
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Login berhasil!'),
-        backgroundColor: Colors.green,
-      ),
-    );
-
-    Navigator.pushReplacementNamed(context, '/dashboard');
-  }
-
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       body: Stack(
         children: [
           _buildVideoBackground(),
-
-          // Form login
-          Center(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.all(20),
+          SafeArea(
+            child: Center(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(24),
                 child: Card(
-                  color: Theme.of(context).cardColor.withOpacity(0.95),
+                  color: theme.cardColor.withOpacity(0.9),
                   elevation: 8,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(16),
                   ),
                   child: Padding(
-                    padding: EdgeInsets.all(25),
+                    padding: const EdgeInsets.all(24),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
-                          Icons.fitness_center,
-                          size: 50,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          'LOGIN',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).primaryColor,
+                        
+                        Container(
+                          width: 80,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            color: theme.primaryColor.withOpacity(0.1),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.fitness_center,
+                            size: 40,
+                            color: theme.primaryColor,
                           ),
                         ),
-                        SizedBox(height: 25),
+                        const SizedBox(height: 16),
+
+                        Text(
+                          "SportClub",
+                          style: TextStyle(
+                            fontSize: 36,
+                            fontWeight: FontWeight.bold,
+                            color: theme.primaryColor,
+                          ),
+                        ),
+                        
+                        const SizedBox(height: 32),
+
                         TextField(
                           controller: _usernameController,
-                          decoration: InputDecoration(
-                            labelText: 'Username',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
+                          decoration: const InputDecoration(
+                            hintText: "Username",
                             prefixIcon: Icon(Icons.person),
                           ),
                         ),
-                        SizedBox(height: 15),
+                        const SizedBox(height: 16),
+
                         TextField(
                           controller: _passwordController,
-                          obscureText: true,
+                          obscureText: _obscurePassword,
                           decoration: InputDecoration(
-                            labelText: 'Password',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                            hintText: "Password",
+                            prefixIcon: const Icon(Icons.lock),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _obscurePassword
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _obscurePassword = !_obscurePassword;
+                                });
+                              },
                             ),
-                            prefixIcon: Icon(Icons.lock),
                           ),
                         ),
-                        SizedBox(height: 25),
+                        const SizedBox(height: 24),
+
+                        
                         SizedBox(
                           width: double.infinity,
-                          height: 50,
                           child: ElevatedButton(
-                            onPressed: () {
-                              _handleLogin(context);
-                            },
-                            child: Text(
-                              'LOGIN',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
+                            onPressed: () => _handleLogin(context),
+                            child: const Text("Login"),
                           ),
                         ),
-                        SizedBox(height: 15),
+                        const SizedBox(height: 20),
+
+                        
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Divider(color: Colors.grey.shade400),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              child: Text(
+                                "atau",
+                                style: TextStyle(
+                                  color: Colors.grey.shade600,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Divider(color: Colors.grey.shade400),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+
                         TextButton(
-                          onPressed: () =>
-                              Navigator.pushNamed(context, '/register'),
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(
+                              context,
+                              '/register',
+                            );
+                          },
                           child: RichText(
                             text: TextSpan(
-                              text: 'Belum punya akun? ',
-                              style: TextStyle(color: Colors.grey[700]),
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
                               children: [
+                                const TextSpan(
+                                  text: "Belum memiliki akun? ",
+                                  style: TextStyle(color: Colors.grey),
+                                ),
                                 TextSpan(
-                                  text: 'Daftar disini',
+                                  text: "Daftar di sini",
                                   style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontWeight: FontWeight.bold,
+                                    color: theme.colorScheme.secondary,
+                                    decoration: TextDecoration.underline,
                                   ),
                                 ),
                               ],
