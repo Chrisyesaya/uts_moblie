@@ -1,4 +1,3 @@
-// dashboard.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/membership_provider.dart';
@@ -89,7 +88,7 @@ class DashboardPage extends StatelessWidget {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.fromLTRB(20,20,20,10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -406,7 +405,6 @@ class DashboardPage extends StatelessWidget {
             ),
           ),
 
-          // Benefits
           Container(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Column(
