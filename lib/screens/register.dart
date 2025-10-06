@@ -113,7 +113,7 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
         ),
         Container(
-          color: Colors.black.withOpacity(0.6), // overlay gelap
+          color: Colors.black.withOpacity(0.6), 
         ),
       ],
     );
@@ -172,7 +172,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                         const SizedBox(height: 32),
 
-                        // Username field
+                        
                         TextField(
                           controller: _usernameController,
                           decoration: const InputDecoration(
@@ -182,7 +182,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         const SizedBox(height: 16),
 
-                        // Password field dengan toggle
+                        
                         TextField(
                           controller: _passwordController,
                           obscureText: _obscurePassword,
@@ -205,7 +205,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         const SizedBox(height: 16),
 
-                        // Confirm Password field dengan toggle
+                        
                         TextField(
                           controller: _confirmPasswordController,
                           obscureText: _obscureConfirmPassword,
@@ -228,7 +228,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         const SizedBox(height: 24),
 
-                        // Register button
+                        
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(

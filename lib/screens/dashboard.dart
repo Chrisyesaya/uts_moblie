@@ -70,13 +70,13 @@ class DashboardPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Welcome Section
+            
             _buildWelcomeSection(context),
             
-            // Gallery Section
+            
             _buildGallerySection(context),
 
-            // Membership Section
+            
             _buildMembershipSection(context),
           ],
         ),
@@ -327,7 +327,7 @@ class DashboardPage extends StatelessWidget {
       ),
       child: Column(
         children: [
-          // Header dengan gradient
+          
           Container(
             width: double.infinity,
             padding: EdgeInsets.all(20),
@@ -381,7 +381,7 @@ class DashboardPage extends StatelessWidget {
             ),
           ),
 
-          // Harga
+          
           Container(
             padding: EdgeInsets.all(20),
             child: Column(
@@ -447,7 +447,7 @@ class DashboardPage extends StatelessWidget {
             ),
           ),
 
-          // Button
+          
           Container(
             padding: EdgeInsets.all(20),
             child: SizedBox(

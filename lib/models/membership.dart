@@ -1,10 +1,9 @@
-// models/membership.dart
 class Membership {
   final String id;
   final String name;
   final String description;
   final double price;
-  final int duration; // dalam bulan
+  final int duration; 
   final String image;
   final List<String> benefits;
   final String category;

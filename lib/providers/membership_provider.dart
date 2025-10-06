@@ -68,7 +68,6 @@ class MembershipProvider with ChangeNotifier {
 
   List<Membership> get memberships => _memberships;
 
-  // Untuk mendapatkan membership berdasarkan kategori
   List<Membership> getMembershipsByCategory(String category) {
     return _memberships.where((m) => m.category == category).toList();
   }

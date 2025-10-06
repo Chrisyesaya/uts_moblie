@@ -28,8 +28,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Gym App',
-        // Light theme: Putih - Ungu
-        // Light theme: Putih - Ungu
+        
         theme: ThemeData(
           fontFamily: 'Montserrat',
           brightness: Brightness.light,
@@ -83,7 +82,6 @@ class MyApp extends StatelessWidget {
           ),
         ),
 
-        // Dark theme: Hitam - Kuning
         darkTheme: ThemeData(
           fontFamily: 'Montserrat',
           brightness: Brightness.dark,
