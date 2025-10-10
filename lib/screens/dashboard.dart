@@ -52,11 +52,8 @@ class DashboardPage extends StatelessWidget {
         ),
         title: Text(
           'SportClub - $username',
-          style: TextStyle(
-            fontFamily: 'Montserrat',
+          style: Theme.of(context).textTheme.headlineMedium!.copyWith(
             color: Theme.of(context).colorScheme.onPrimary,
-            fontWeight: FontWeight.w600,
-            fontSize: 20,
           ),
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -70,13 +67,8 @@ class DashboardPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            
             _buildWelcomeSection(context),
-            
-            
             _buildGallerySection(context),
-
-            
             _buildMembershipSection(context),
           ],
         ),
@@ -85,8 +77,6 @@ class DashboardPage extends StatelessWidget {
   }
 
   Widget _buildWelcomeSection(BuildContext context) {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    
     return Container(
       padding: EdgeInsets.fromLTRB(20,20,20,10),
       child: Column(
@@ -94,27 +84,19 @@ class DashboardPage extends StatelessWidget {
         children: [
           Text(
             'Tentang Aplikasi',
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
+            style: Theme.of(context).textTheme.headlineLarge!.copyWith(
               color: Theme.of(context).primaryColor,
             ),
           ),
           SizedBox(height: 8),
           Text(
             'SportClub adalah aplikasi membership gym yang menyediakan berbagai paket membership dengan durasi dan fasilitas berbeda.',
-            style: TextStyle(
-              color: isDarkMode ? Colors.white70 : Colors.black87,
-              fontSize: 14,
-            ),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           SizedBox(height: 4),
           Text(
             'Aplikasi ini dibuat oleh: \n- Vincent Pratama / 32230011\n- Christopher Yesaya / 32230031',
-            style: TextStyle(
-              color: isDarkMode ? Colors.white70 : Colors.black87,
-              fontSize: 14,
-            ),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
         ],
       ),
@@ -122,7 +104,6 @@ class DashboardPage extends StatelessWidget {
   }
 
   Widget _buildGallerySection(BuildContext context) {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final List<Map<String, String>> galleryItems = [
       {
         'image': 'assets/1.jpg',
@@ -163,19 +144,14 @@ class DashboardPage extends StatelessWidget {
         children: [
           Text(
             'Galeri Fasilitas',
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
+            style: Theme.of(context).textTheme.headlineLarge!.copyWith(
               color: Theme.of(context).primaryColor,
             ),
           ),
           SizedBox(height: 8),
           Text(
             'Jelajahi berbagai fasilitas sport premium yang kami sediakan',
-            style: TextStyle(
-              color: isDarkMode ? Colors.white70 : Colors.black87,
-              fontSize: 14,
-            ),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           SizedBox(height: 16),
           Container(
@@ -241,9 +217,7 @@ class DashboardPage extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
                     color: isDarkMode ? Colors.white : Colors.black,
                   ),
                   maxLines: 1,
@@ -252,8 +226,7 @@ class DashboardPage extends StatelessWidget {
                 SizedBox(height: 4),
                 Text(
                   description,
-                  style: TextStyle(
-                    fontSize: 12,
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: isDarkMode ? Colors.white70 : Colors.black87,
                   ),
                   maxLines: 2,
@@ -268,8 +241,6 @@ class DashboardPage extends StatelessWidget {
   }
 
   Widget _buildMembershipSection(BuildContext context) {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    
     return Consumer<MembershipProvider>(
       builder: (context, membershipProvider, child) {
         return Container(
@@ -279,19 +250,14 @@ class DashboardPage extends StatelessWidget {
             children: [
               Text(
                 'Pilih Membership',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
+                style: Theme.of(context).textTheme.headlineLarge!.copyWith(
                   color: Theme.of(context).primaryColor,
                 ),
               ),
               SizedBox(height: 8),
               Text(
                 'Tingkatkan pengalaman olahraga Anda dengan membership terbaik',
-                style: TextStyle(
-                  color: isDarkMode ? Colors.white70 : Colors.black87,
-                  fontSize: 14,
-                ),
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               SizedBox(height: 20),
               ...membershipProvider.memberships.map((membership) => 
@@ -327,7 +293,6 @@ class DashboardPage extends StatelessWidget {
       ),
       child: Column(
         children: [
-          
           Container(
             width: double.infinity,
             padding: EdgeInsets.all(20),
@@ -350,7 +315,7 @@ class DashboardPage extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 24,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                     Container(
@@ -363,7 +328,7 @@ class DashboardPage extends StatelessWidget {
                         '${membership.duration} Bulan',
                         style: TextStyle(
                           color: Colors.white,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
@@ -375,13 +340,13 @@ class DashboardPage extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white.withOpacity(0.9),
                     fontSize: 14,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ],
             ),
           ),
 
-          
           Container(
             padding: EdgeInsets.all(20),
             child: Column(
@@ -390,16 +355,13 @@ class DashboardPage extends StatelessWidget {
                   'Rp ${_formatPrice(membership.price)}',
                   style: TextStyle(
                     fontSize: 28,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w700,
                     color: Theme.of(context).primaryColor,
                   ),
                 ),
                 Text(
                   'Rp ${_formatPrice(membership.price / membership.duration)}/bulan',
-                  style: TextStyle(
-                    color: isDarkMode ? Colors.white70 : Colors.black87,
-                    fontSize: 14,
-                  ),
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ],
             ),
@@ -412,8 +374,7 @@ class DashboardPage extends StatelessWidget {
               children: [
                 Text(
                   'Fasilitas yang didapat:',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
                     color: isDarkMode ? Colors.white : Colors.black,
                   ),
                 ),
@@ -433,9 +394,8 @@ class DashboardPage extends StatelessWidget {
                         Expanded(
                           child: Text(
                             benefit,
-                            style: TextStyle(
+                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                               color: isDarkMode ? Colors.white70 : Colors.black87,
-                              fontSize: 14,
                             ),
                           ),
                         ),
@@ -447,7 +407,6 @@ class DashboardPage extends StatelessWidget {
             ),
           ),
 
-          
           Container(
             padding: EdgeInsets.all(20),
             child: SizedBox(
@@ -473,9 +432,7 @@ class DashboardPage extends StatelessWidget {
                 ),
                 child: Text(
                   'Pilih Membership',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                  style: Theme.of(context).textTheme.labelLarge!.copyWith(
                     color: _getButtonTextColor(membership.name, isDarkMode),
                   ),
                 ),

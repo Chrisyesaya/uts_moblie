@@ -27,8 +27,8 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Gym App',
-        
+        title: 'SportClub',
+
         theme: ThemeData(
           fontFamily: 'Montserrat',
           brightness: Brightness.light,
@@ -48,17 +48,58 @@ class MyApp extends StatelessWidget {
             titleTextStyle: TextStyle(
               color: Colors.purple,
               fontSize: 20,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w700,
             ),
           ),
           textTheme: const TextTheme(
-            bodyLarge: TextStyle(color: Colors.black),
-            bodyMedium: TextStyle(color: Colors.black87),
+            headlineLarge: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
+            ),
+            headlineMedium: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
+            titleLarge: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
+            titleMedium: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
+            bodyLarge: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: Colors.black87,
+            ),
+            bodyMedium: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: Colors.black87,
+            ),
+            bodySmall: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: Colors.black54,
+            ),
+            labelLarge: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
           ),
           inputDecorationTheme: InputDecorationTheme(
             filled: true,
             fillColor: Colors.grey[200],
-            hintStyle: const TextStyle(color: Colors.grey),
+            hintStyle: const TextStyle(
+              color: Colors.grey,
+              fontWeight: FontWeight.w500,
+            ),
             border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(12)),
               borderSide: BorderSide.none,
@@ -72,13 +113,15 @@ class MyApp extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
-              textStyle: const TextStyle(fontWeight: FontWeight.bold),
+              textStyle: const TextStyle(fontWeight: FontWeight.w600),
             ),
           ),
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             backgroundColor: Colors.white,
             selectedItemColor: Colors.purple,
             unselectedItemColor: Colors.grey,
+            selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
+            unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w500),
           ),
         ),
 
@@ -101,17 +144,58 @@ class MyApp extends StatelessWidget {
             titleTextStyle: TextStyle(
               color: Colors.amber[600],
               fontSize: 20,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w700,
             ),
           ),
           textTheme: const TextTheme(
-            bodyLarge: TextStyle(color: Colors.white),
-            bodyMedium: TextStyle(color: Colors.white70),
+            headlineLarge: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.w700,
+              color: Colors.white,
+            ),
+            headlineMedium: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
+            titleLarge: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
+            titleMedium: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
+            bodyLarge: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: Colors.white70,
+            ),
+            bodyMedium: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: Colors.white70,
+            ),
+            bodySmall: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: Colors.white60,
+            ),
+            labelLarge: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
           ),
           inputDecorationTheme: InputDecorationTheme(
             filled: true,
             fillColor: Colors.grey[900],
-            hintStyle: TextStyle(color: Colors.grey[500]),
+            hintStyle: TextStyle(
+              color: Colors.grey[500],
+              fontWeight: FontWeight.w500,
+            ),
             border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(12)),
               borderSide: BorderSide.none,
@@ -125,13 +209,15 @@ class MyApp extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
-              textStyle: const TextStyle(fontWeight: FontWeight.bold),
+              textStyle: const TextStyle(fontWeight: FontWeight.w600),
             ),
           ),
           bottomNavigationBarTheme: BottomNavigationBarThemeData(
             backgroundColor: Colors.black,
             selectedItemColor: Colors.amber[600],
             unselectedItemColor: Colors.grey,
+            selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600),
+            unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500),
           ),
         ),
 
