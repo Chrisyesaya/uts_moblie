@@ -449,7 +449,7 @@ class DashboardPage extends StatelessWidget {
       case 'Silver':
         return isDarkMode 
             ? [Colors.grey[600]!, Colors.grey[500]!]
-            : [Colors.grey[400]!, Colors.grey[300]!];
+            : [Colors.grey[600]!, Colors.grey[500]!];
       case 'Gold':
         return isDarkMode
             ? [Colors.amber[700]!, Colors.amber[600]!]
