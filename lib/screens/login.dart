@@ -122,8 +122,8 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         
                         Container(
-                          width: 80,
-                          height: 80,
+                          width: 100,
+                          height: 100,
                           decoration: BoxDecoration(
                             color: Theme.of(context).primaryColor.withOpacity(0.1),
                             shape: BoxShape.circle,
@@ -132,11 +132,17 @@ class _LoginPageState extends State<LoginPage> {
                               width: 2
                             ),
                           ),
-                          child: Icon(
-                            Icons.fitness_center,
-                            size: 40,
-                            color: Theme.of(context).primaryColor,
-                          ),
+                          child: Theme.of(context).brightness == Brightness.dark
+                              ? Image.asset(
+                                  'assets/logo_putih.png',
+                                  width: 30,
+                                  height: 30,
+                                )
+                              : Image.asset(
+                                  'assets/logo_hitam.png',
+                                  width: 30,
+                                  height: 30,
+                                ),
                         ),
                         const SizedBox(height: 16),
 
