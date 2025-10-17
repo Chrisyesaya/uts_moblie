@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
-import '../models/membership.dart';
+import 'membership.dart';
 
 class AuthProvider with ChangeNotifier {
   bool _isLoggedIn = false;

@@ -1,6 +1,6 @@
 // providers/membership_provider.dart
 import 'package:flutter/foundation.dart';
-import '../models/membership.dart';
+import 'membership.dart';
 
 class MembershipProvider with ChangeNotifier {
   final List<Membership> _memberships = [

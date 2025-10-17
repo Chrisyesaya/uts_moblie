@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import '../models/membership.dart';
+import 'membership.dart';
 
 class CartProvider with ChangeNotifier {
   final List<Membership> _items = [];
