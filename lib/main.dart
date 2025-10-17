@@ -225,7 +225,7 @@ class MyApp extends StatelessWidget {
 
             themeMode: ThemeMode.system,
             
-            // Gunakan home dengan auth check daripada initialRoute
+            
             home: auth.isLoggedIn ? const MainPage() : LoginPage(),
             
             routes: {

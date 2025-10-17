@@ -57,7 +57,6 @@ class _CartPageState extends State<CartPage> {
           return SingleChildScrollView(
             child: Column(
               children: [
-                
                 if (selectedCard != null)
                   Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -105,7 +104,6 @@ class _CartPageState extends State<CartPage> {
 
                 Divider(color: primaryColor.withOpacity(0.5)), 
 
-                
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
@@ -166,7 +164,6 @@ class _CartPageState extends State<CartPage> {
 
                       const SizedBox(height: 16),
 
-                      
                       if (selectedFacilities.isNotEmpty)
                         Text(
                           'Fasilitas Terpilih:',
@@ -205,7 +202,6 @@ class _CartPageState extends State<CartPage> {
 
                 Divider(color: primaryColor.withOpacity(0.5)), 
 
-                
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: Container(
@@ -235,13 +231,11 @@ class _CartPageState extends State<CartPage> {
                   ),
                 ),
 
-                
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      
                       ElevatedButton(
                         onPressed: () async {
                           final confirm = await showDialog<bool>(
@@ -309,7 +303,6 @@ class _CartPageState extends State<CartPage> {
                         ),
                       ),
 
-                      
                       ElevatedButton(
                         onPressed: () {
                           if (cartProvider.selectedCard == null) {
@@ -344,7 +337,6 @@ class _CartPageState extends State<CartPage> {
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 20),
               ],
             ),

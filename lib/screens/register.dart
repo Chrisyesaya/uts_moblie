@@ -55,9 +55,9 @@ class _RegisterPageState extends State<RegisterPage> {
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: DateTime.now().subtract(Duration(days: 365 * 18)), // Minimal 18 tahun
+      initialDate: DateTime.now().subtract(Duration(days: 365 * 18)), 
       firstDate: DateTime(1900),
-      lastDate: DateTime.now().subtract(Duration(days: 365 * 10)), // Minimal 10 tahun
+      lastDate: DateTime.now().subtract(Duration(days: 365 * 10)), 
     );
     if (picked != null && picked != _selectedDate) {
       setState(() {
@@ -72,7 +72,7 @@ class _RegisterPageState extends State<RegisterPage> {
     final confirmPassword = _confirmPasswordController.text.trim();
     final address = _addressController.text.trim();
 
-    // Validasi sederhana sesuai permintaan fields
+    
     if (username.isEmpty ||
         password.isEmpty ||
         confirmPassword.isEmpty ||
@@ -175,7 +175,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        // Logo dan Judul
+                        
                         Container(
                           width: 70,
                           height: 70,
@@ -205,7 +205,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         const SizedBox(height: 32),
 
-                        // Form Fields (disederhanakan)
+                        
                         TextField(
                           controller: _usernameController,
                           decoration: const InputDecoration(
@@ -215,7 +215,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         const SizedBox(height: 12),
 
-                        // Gender Dropdown
+                        
                         DropdownButtonFormField<String>(
                           value: _selectedGender,
                           decoration: const InputDecoration(
@@ -236,7 +236,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         const SizedBox(height: 12),
 
-                        // Tanggal Lahir
+                        
                         GestureDetector(
                           onTap: () => _selectDate(context),
                           child: AbsorbPointer(
@@ -255,7 +255,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         const SizedBox(height: 12),
 
-                        // Alamat Lengkap
+                        
                         TextField(
                           controller: _addressController,
                           maxLines: 2,
@@ -310,7 +310,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         const SizedBox(height: 20),
 
-                        // Tombol Register
+                        
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
@@ -323,7 +323,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         const SizedBox(height: 16),
 
-                        // Separator & link to login
+                        
                         Row(
                           children: [
                             Expanded(child: Divider(color: Colors.grey.shade400)),

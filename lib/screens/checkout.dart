@@ -77,7 +77,7 @@ class CheckoutPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // ====== KARTU MEMBERSHIP ======
+                
                 if (card != null)
                   Container(
                     decoration: BoxDecoration(
@@ -165,8 +165,7 @@ class CheckoutPage extends StatelessWidget {
                   ),
 
                 const SizedBox(height: 20),
-
-                // ====== FASILITAS TAMBAHAN ======
+ 
                 Text(
                   'Fasilitas Tambahan:',
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
@@ -205,7 +204,6 @@ class CheckoutPage extends StatelessWidget {
 
                 Divider(color: primaryColor.withOpacity(0.5), height: 30),
 
-                // ====== METODE PEMBAYARAN ======
                 Text(
                   'Pilih Metode Pembayaran:',
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
@@ -223,7 +221,6 @@ class CheckoutPage extends StatelessWidget {
 
                 Divider(color: primaryColor.withOpacity(0.5), height: 30),
 
-                // ====== TOTAL ======
                 Container(
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
@@ -252,7 +249,6 @@ class CheckoutPage extends StatelessWidget {
 
                 const SizedBox(height: 30),
 
-                // ====== TOMBOL KONFIRMASI ======
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -342,7 +338,6 @@ class CheckoutPage extends StatelessWidget {
                             ),
                             ElevatedButton(
                               onPressed: () {
-                                // ✅ SIMPAN DATA KE AUTH PROVIDER
                                 final authProvider =
                                     Provider.of<AuthProvider>(context, listen: false);
                                 if (card != null) {
@@ -364,7 +359,6 @@ class CheckoutPage extends StatelessWidget {
                                   ),
                                 );
 
-                                // ✅ Setelah bayar, kembali ke halaman sebelumnya
                                 Navigator.pop(context);
                               },
                               style: ElevatedButton.styleFrom(
@@ -407,7 +401,7 @@ class CheckoutPage extends StatelessWidget {
   }
 }
 
-// ======= PEMILIH METODE PEMBAYARAN =======
+
 class _PaymentMethodSelector extends StatefulWidget {
   final List<Map<String, dynamic>> paymentMethods;
   final bool isDarkMode;
