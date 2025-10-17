@@ -1,4 +1,3 @@
-// providers/membership_provider.dart
 import 'package:flutter/foundation.dart';
 import 'membership.dart';
 
