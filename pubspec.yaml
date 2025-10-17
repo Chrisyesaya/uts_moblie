@@ -96,4 +96,4 @@ flutter:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/logo_putih.png"
+  image_path: "assets/logo_hitam.png"
