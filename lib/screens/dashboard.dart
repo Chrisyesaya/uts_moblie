@@ -24,7 +24,9 @@ class DashboardPage extends StatelessWidget {
                   height: 300,
                   child: ClipOval(
                     child: Container(
-                      color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.primary.withOpacity(0.2),
                       child: Icon(
                         Icons.person,
                         size: 100,
@@ -78,7 +80,7 @@ class DashboardPage extends StatelessWidget {
 
   Widget _buildWelcomeSection(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(20,20,20,10),
+      padding: EdgeInsets.fromLTRB(20, 20, 20, 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -108,32 +110,32 @@ class DashboardPage extends StatelessWidget {
       {
         'image': 'assets/1.jpg',
         'title': 'Area Gym Premium',
-        'description': 'Equipment modern dengan trainer berpengalaman'
+        'description': 'Equipment modern dengan trainer berpengalaman',
       },
       {
-        'image': 'assets/2.jpg', 
+        'image': 'assets/2.jpg',
         'title': 'Billiard Lounge',
-        'description': 'Meja billiard profesional untuk waktu santai'
+        'description': 'Meja billiard profesional untuk waktu santai',
       },
       {
         'image': 'assets/3.jpg',
         'title': 'Tenis Meja',
-        'description': 'Area tenis meja untuk pertandingan seru'
+        'description': 'Area tenis meja untuk pertandingan seru',
       },
       {
         'image': 'assets/4.jpg',
         'title': 'Badminton Court',
-        'description': 'Lapangan badminton standar nasional'
+        'description': 'Lapangan badminton standar nasional',
       },
       {
         'image': 'assets/5.jpg',
         'title': 'Yoga Studio',
-        'description': 'Studio yoga dengan instruktur bersertifikat'
+        'description': 'Studio yoga dengan instruktur bersertifikat',
       },
       {
         'image': 'assets/6.jpg',
         'title': 'Squash Court',
-        'description': 'Court squash dengan pencahayaan optimal'
+        'description': 'Court squash dengan pencahayaan optimal',
       },
     ];
 
@@ -150,7 +152,7 @@ class DashboardPage extends StatelessWidget {
           ),
           SizedBox(height: 8),
           Text(
-            'Jelajahi berbagai fasilitas sport premium yang kami sediakan',
+            'Jelajahi berbagai fasilitas sport premium yang kami sediakan.',
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           SizedBox(height: 16),
@@ -158,9 +160,16 @@ class DashboardPage extends StatelessWidget {
             height: 220,
             child: ListView(
               scrollDirection: Axis.horizontal,
-              children: galleryItems.map((item) => 
-                _buildGalleryItem(context, item['image']!, item['title']!, item['description']!)
-              ).toList(),
+              children: galleryItems
+                  .map(
+                    (item) => _buildGalleryItem(
+                      context,
+                      item['image']!,
+                      item['title']!,
+                      item['description']!,
+                    ),
+                  )
+                  .toList(),
             ),
           ),
         ],
@@ -168,9 +177,14 @@ class DashboardPage extends StatelessWidget {
     );
   }
 
-  Widget _buildGalleryItem(BuildContext context, String imagePath, String title, String description) {
+  Widget _buildGalleryItem(
+    BuildContext context,
+    String imagePath,
+    String title,
+    String description,
+  ) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Container(
       width: 180,
       margin: EdgeInsets.only(right: 12),
@@ -256,13 +270,15 @@ class DashboardPage extends StatelessWidget {
               ),
               SizedBox(height: 8),
               Text(
-                'Tingkatkan pengalaman olahraga Anda dengan membership terbaik',
+                'Tingkatkan pengalaman olahraga Anda dengan membership terbaik.',
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               SizedBox(height: 20),
-              ...membershipProvider.memberships.map((membership) => 
-                _buildMembershipCard(context, membership)
-              ).toList(),
+              ...membershipProvider.memberships
+                  .map(
+                    (membership) => _buildMembershipCard(context, membership),
+                  )
+                  .toList(),
             ],
           ),
         );
@@ -273,7 +289,7 @@ class DashboardPage extends StatelessWidget {
   Widget _buildMembershipCard(BuildContext context, Membership membership) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final isPlatinum = membership.name == 'Platinum';
-    
+
     return Container(
       margin: EdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(
@@ -286,10 +302,9 @@ class DashboardPage extends StatelessWidget {
             offset: Offset(0, 4),
           ),
         ],
-        border: isPlatinum ? Border.all(
-          color: Theme.of(context).primaryColor,
-          width: 2,
-        ) : null,
+        border: isPlatinum
+            ? Border.all(color: Theme.of(context).primaryColor, width: 2)
+            : null,
       ),
       child: Column(
         children: [
@@ -319,7 +334,10 @@ class DashboardPage extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(20),
@@ -379,30 +397,35 @@ class DashboardPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 12),
-                ...membership.benefits.map((benefit) => 
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 8),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(
-                          Icons.check_circle,
-                          color: Theme.of(context).primaryColor,
-                          size: 18,
-                        ),
-                        SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            benefit,
-                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              color: isDarkMode ? Colors.white70 : Colors.black87,
+                ...membership.benefits
+                    .map(
+                      (benefit) => Padding(
+                        padding: EdgeInsets.only(bottom: 8),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.check_circle,
+                              color: Theme.of(context).primaryColor,
+                              size: 18,
                             ),
-                          ),
+                            SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                benefit,
+                                style: Theme.of(context).textTheme.bodyMedium!
+                                    .copyWith(
+                                      color: isDarkMode
+                                          ? Colors.white70
+                                          : Colors.black87,
+                                    ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  )
-                ).toList(),
+                      ),
+                    )
+                    .toList(),
               ],
             ),
           ),
@@ -414,11 +437,15 @@ class DashboardPage extends StatelessWidget {
               height: 50,
               child: ElevatedButton(
                 onPressed: () {
-                  Provider.of<CartProvider>(context, listen: false)
-                      .addItem(membership);
+                  Provider.of<CartProvider>(
+                    context,
+                    listen: false,
+                  ).addItem(membership);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('${membership.name} ditambahkan ke keranjang'),
+                      content: Text(
+                        '${membership.name} ditambahkan ke keranjang',
+                      ),
                       behavior: SnackBarBehavior.floating,
                     ),
                   );
@@ -447,7 +474,7 @@ class DashboardPage extends StatelessWidget {
   List<Color> _getCardGradient(String membershipName, bool isDarkMode) {
     switch (membershipName) {
       case 'Silver':
-        return isDarkMode 
+        return isDarkMode
             ? [Colors.grey[600]!, Colors.grey[500]!]
             : [Colors.grey[600]!, Colors.grey[500]!];
       case 'Gold':
@@ -492,9 +519,11 @@ class DashboardPage extends StatelessWidget {
   }
 
   String _formatPrice(double price) {
-    return price.toStringAsFixed(0).replaceAllMapped(
-      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-      (Match m) => '${m[1]}.',
-    );
+    return price
+        .toStringAsFixed(0)
+        .replaceAllMapped(
+          RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+          (Match m) => '${m[1]}.',
+        );
   }
 }
