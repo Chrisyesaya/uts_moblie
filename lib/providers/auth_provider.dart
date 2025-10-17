@@ -9,12 +9,10 @@ class AuthProvider with ChangeNotifier {
   Membership? _userMembership;
   List<Map<String, dynamic>> _extraFacilities = [];
 
-  // Data pribadi utama
   String? _gender;
   String? _address;
   DateTime? _birthDate;
 
-  // Simulasi database akun sederhana
   final Map<String, Map<String, dynamic>> _accounts = {
     "admin": {
       "password": "admin123",
@@ -25,7 +23,6 @@ class AuthProvider with ChangeNotifier {
     },
   };
 
-  // ===== Getter =====
   bool get isLoggedIn => _isLoggedIn;
   String? get username => _username;
   String? get profileImage => _profileImagePath;
@@ -41,14 +38,12 @@ class AuthProvider with ChangeNotifier {
   Membership? get userMembership => _userMembership;
   List<Map<String, dynamic>> get extraFacilities => _extraFacilities;
 
-  // ===== LOGIN =====
   bool login(String username, String password) {
     if (_accounts.containsKey(username) &&
         _accounts[username]!["password"] == password) {
       _isLoggedIn = true;
       _username = username;
-
-      // Muat data user
+  
       final userData = _accounts[username]!;
       _gender = userData["gender"];
       _address = userData["address"];
@@ -60,7 +55,6 @@ class AuthProvider with ChangeNotifier {
     return false;
   }
 
-  // ===== LOGOUT =====
   void logout() {
     _isLoggedIn = false;
     _username = null;
@@ -72,8 +66,7 @@ class AuthProvider with ChangeNotifier {
     _birthDate = null;
     notifyListeners();
   }
-
-  // ===== REGISTER =====
+  
   bool register({
     required String username,
     required String password,
@@ -93,22 +86,19 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
     return true;
   }
-
-  // ===== FOTO PROFIL =====
+  
   Future<void> updateProfileImage(String imagePath) async {
     _profileImagePath = imagePath;
     notifyListeners();
   }
-
-  // ===== MEMBERSHIP =====
+  
   void setMembership(
       Membership membership, List<Map<String, dynamic>> facilities) {
     _userMembership = membership;
     _extraFacilities = facilities;
     notifyListeners();
   }
-
-  // ===== UPDATE PROFIL (opsional) =====
+  
   void updateProfile({
     String? gender,
     String? address,

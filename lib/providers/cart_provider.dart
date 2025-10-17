@@ -1,20 +1,16 @@
-// providers/cart_provider.dart
 import 'package:flutter/foundation.dart';
 import '../models/membership.dart';
 
 class CartProvider with ChangeNotifier {
-  // ===== DATA KARTU UTAMA =====
   final List<Membership> _items = [];
   List<Membership> get items => _items;
-
-  // ===== DATA TAMBAHAN =====
-  String? selectedCard; // Nama kartu: Bronze, Silver, Gold
-  double basePrice = 0; // Harga kartu utama
-  List<Map<String, dynamic>> selectedFacilities = []; // Fasilitas tambahan
-
-  // ====== KARTU ======
+  
+  String? selectedCard; 
+  double basePrice = 0; 
+  List<Map<String, dynamic>> selectedFacilities = []; 
+  
   void addItem(Membership membership) {
-    _items.clear(); // hanya satu kartu aktif di keranjang
+    _items.clear(); 
     _items.add(membership);
     selectedCard = membership.name;
     basePrice = membership.price;
@@ -27,10 +23,9 @@ class CartProvider with ChangeNotifier {
     basePrice = 0;
     notifyListeners();
   }
-
-  // ====== FASILITAS TAMBAHAN ======
+  
   void addFacility(Map<String, dynamic> facility) {
-    // hindari fasilitas duplikat
+    
     if (!selectedFacilities.any((f) => f['name'] == facility['name'])) {
       selectedFacilities.add(facility);
       notifyListeners();
@@ -41,8 +36,7 @@ class CartProvider with ChangeNotifier {
     selectedFacilities.removeWhere((f) => f['name'] == facility['name']);
     notifyListeners();
   }
-
-  // ====== TOTAL HARGA ======
+  
   double get totalPrice {
     double total = basePrice;
     for (var f in selectedFacilities) {
@@ -51,7 +45,6 @@ class CartProvider with ChangeNotifier {
     return total;
   }
 
-  // ====== HAPUS SEMUA ======
   void clearCart() {
     _items.clear();
     selectedCard = null;

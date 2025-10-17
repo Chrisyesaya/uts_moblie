@@ -19,8 +19,7 @@ class _CartPageState extends State<CartPage> {
     {'name': 'Yoga Studio', 'price': 100000},
     {'name': 'Squash Court', 'price': 75000},
   ];
-
-  // Formatter untuk ubah angka ke format Rupiah
+  
   final NumberFormat currencyFormat =
       NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
 
@@ -58,7 +57,7 @@ class _CartPageState extends State<CartPage> {
           return SingleChildScrollView(
             child: Column(
               children: [
-                // ==== GAMBAR KARTU ====
+                
                 if (selectedCard != null)
                   Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -106,7 +105,7 @@ class _CartPageState extends State<CartPage> {
 
                 Divider(color: primaryColor.withOpacity(0.5)), 
 
-                // ==== FASILITAS TAMBAHAN ====
+                
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
@@ -167,7 +166,7 @@ class _CartPageState extends State<CartPage> {
 
                       const SizedBox(height: 16),
 
-                      // List fasilitas yang dipilih
+                      
                       if (selectedFacilities.isNotEmpty)
                         Text(
                           'Fasilitas Terpilih:',
@@ -206,7 +205,7 @@ class _CartPageState extends State<CartPage> {
 
                 Divider(color: primaryColor.withOpacity(0.5)), 
 
-                // ==== TOTAL ====
+                
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: Container(
@@ -236,13 +235,13 @@ class _CartPageState extends State<CartPage> {
                   ),
                 ),
 
-                // ==== TOMBOL AKSI ====
+                
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      // Tombol Hapus Pesanan
+                      
                       ElevatedButton(
                         onPressed: () async {
                           final confirm = await showDialog<bool>(
@@ -310,7 +309,7 @@ class _CartPageState extends State<CartPage> {
                         ),
                       ),
 
-                      // Tombol Checkout
+                      
                       ElevatedButton(
                         onPressed: () {
                           if (cartProvider.selectedCard == null) {
