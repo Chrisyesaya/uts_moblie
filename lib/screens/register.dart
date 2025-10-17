@@ -196,14 +196,14 @@ class _RegisterPageState extends State<RegisterPage> {
                         const SizedBox(height: 12),
 
                         Text(
-                          "Daftar SportClub",
+                          "Register SportClub",
                           style: TextStyle(
-                            fontSize: 24,
+                            fontSize: 28,
                             fontWeight: FontWeight.bold,
                             color: theme.primaryColor,
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 32),
 
                         // Form Fields (disederhanakan)
                         TextField(

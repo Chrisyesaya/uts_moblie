@@ -141,9 +141,9 @@ class _LoginPageState extends State<LoginPage> {
                         const SizedBox(height: 16),
 
                         Text(
-                          "SportClub",
+                          "Login SportClub",
                           style: TextStyle(
-                            fontSize: 36,
+                            fontSize: 28,
                             fontWeight: FontWeight.bold,
                             color: theme.primaryColor,
                           ),
