@@ -11,7 +11,8 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   final TextEditingController _addressController = TextEditingController();
 
   late VideoPlayerController _videoController;
@@ -55,9 +56,9 @@ class _RegisterPageState extends State<RegisterPage> {
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: DateTime.now().subtract(Duration(days: 365 * 18)), 
+      initialDate: DateTime.now().subtract(Duration(days: 365 * 18)),
       firstDate: DateTime(1900),
-      lastDate: DateTime.now().subtract(Duration(days: 365 * 10)), 
+      lastDate: DateTime.now().subtract(Duration(days: 365 * 10)),
     );
     if (picked != null && picked != _selectedDate) {
       setState(() {
@@ -72,23 +73,22 @@ class _RegisterPageState extends State<RegisterPage> {
     final confirmPassword = _confirmPasswordController.text.trim();
     final address = _addressController.text.trim();
 
-    
     if (username.isEmpty ||
         password.isEmpty ||
         confirmPassword.isEmpty ||
         address.isEmpty ||
         _selectedGender == null ||
         _selectedDate == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Harap isi semua field')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Harap isi semua field')));
       return;
     }
 
     if (password != confirmPassword) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Password tidak cocok')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Password tidak cocok')));
       return;
     }
 
@@ -139,9 +139,7 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
           ),
         ),
-        Container(
-          color: Colors.black.withOpacity(0.6),
-        ),
+        Container(color: Colors.black.withOpacity(0.6)),
       ],
     );
   }
@@ -175,23 +173,30 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        
                         Container(
-                          width: 70,
-                          height: 70,
+                          width: 100,
+                          height: 100,
                           decoration: BoxDecoration(
-                            color: theme.primaryColor.withOpacity(0.1),
+                            color: Theme.of(
+                              context,
+                            ).primaryColor.withOpacity(0.1),
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: theme.primaryColor,
-                              width: 2
+                              color: Theme.of(context).primaryColor,
+                              width: 2,
                             ),
                           ),
-                          child: Icon(
-                            Icons.fitness_center,
-                            size: 35,
-                            color: theme.primaryColor,
-                          ),
+                          child: Theme.of(context).brightness == Brightness.dark
+                              ? Image.asset(
+                                  'assets/logo_putih.png',
+                                  width: 30,
+                                  height: 30,
+                                )
+                              : Image.asset(
+                                  'assets/logo_hitam.png',
+                                  width: 30,
+                                  height: 30,
+                                ),
                         ),
                         const SizedBox(height: 12),
 
@@ -205,7 +210,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         const SizedBox(height: 32),
 
-                        
                         TextField(
                           controller: _usernameController,
                           decoration: const InputDecoration(
@@ -215,7 +219,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         const SizedBox(height: 12),
 
-                        
                         DropdownButtonFormField<String>(
                           value: _selectedGender,
                           decoration: const InputDecoration(
@@ -236,15 +239,14 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         const SizedBox(height: 12),
 
-                        
                         GestureDetector(
                           onTap: () => _selectDate(context),
                           child: AbsorbPointer(
                             child: TextField(
                               controller: TextEditingController(
                                 text: _selectedDate != null
-                                  ? "${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}"
-                                  : ""
+                                    ? "${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}"
+                                    : "",
                               ),
                               decoration: const InputDecoration(
                                 hintText: "Tanggal Lahir",
@@ -255,7 +257,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         const SizedBox(height: 12),
 
-                        
                         TextField(
                           controller: _addressController,
                           maxLines: 2,
@@ -302,7 +303,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                               onPressed: () {
                                 setState(() {
-                                  _obscureConfirmPassword = !_obscureConfirmPassword;
+                                  _obscureConfirmPassword =
+                                      !_obscureConfirmPassword;
                                 });
                               },
                             ),
@@ -310,7 +312,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         const SizedBox(height: 20),
 
-                        
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
@@ -323,15 +324,23 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         const SizedBox(height: 16),
 
-                        
                         Row(
                           children: [
-                            Expanded(child: Divider(color: Colors.grey.shade400)),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 12),
-                              child: Text("atau", style: TextStyle(color: Colors.grey.shade600)),
+                            Expanded(
+                              child: Divider(color: Colors.grey.shade400),
                             ),
-                            Expanded(child: Divider(color: Colors.grey.shade400)),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                              ),
+                              child: Text(
+                                "atau",
+                                style: TextStyle(color: Colors.grey.shade600),
+                              ),
+                            ),
+                            Expanded(
+                              child: Divider(color: Colors.grey.shade400),
+                            ),
                           ],
                         ),
                         const SizedBox(height: 16),
